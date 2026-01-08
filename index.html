@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeTrack - Location Tracker</title>
+    <meta name="description" content="Track your loved ones safely with real-time location sharing">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-72x72.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="app-title">
+                <i class="fas fa-map-marker-alt"></i>
+                <h1>SafeTrack</h1>
+            </div>
+            <button id="installBtn" class="install-btn">
+                <i class="fas fa-download"></i> Install App
+            </button>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard">
+            <!-- Tracking Status -->
+            <section class="card status-card">
+                <h2><i class="fas fa-user-check"></i> Tracking Status</h2>
+                <div class="status-indicator">
+                    <div class="status-circle active"></div>
+                    <span>Live Tracking Active</span>
+                </div>
+                <p class="last-update">Last updated: <span id="lastUpdate">Just now</span></p>
+            </section>
+
+            <!-- Current Location -->
+            <section class="card location-card">
+                <h2><i class="fas fa-location-dot"></i> Current Location</h2>
+                <div class="location-display">
+                    <p id="coordinates">Lat: Loading... Lon: Loading...</p>
+                    <p id="address">Fetching address...</p>
+                </div>
+                <div class="location-actions">
+                    <button id="shareLocation" class="btn primary">
+                        <i class="fas fa-share"></i> Share My Location
+                    </button>
+                    <button id="updateLocation" class="btn secondary">
+                        <i class="fas fa-sync"></i> Update Now
+                    </button>
+                </div>
+            </section>
+
+            <!-- Emergency Help Button -->
+            <section class="card emergency-card">
+                <h2><i class="fas fa-circle-exclamation"></i> Emergency Help</h2>
+                <p class="emergency-info">In case you're lost or need help, press the button below. Your location will be sent to emergency contacts.</p>
+                
+                <button id="helpBtn" class="emergency-btn">
+                    <div class="pulse-ring"></div>
+                    <i class="fas fa-sos"></i>
+                    <span>HELP</span>
+                </button>
+                
+                <div class="emergency-contacts">
+                    <h3>Emergency Contacts</h3>
+                    <div class="contacts-list">
+                        <div class="contact">
+                            <i class="fas fa-user"></i>
+                            <span>Mom: +1234567890</span>
+                        </div>
+                        <div class="contact">
+                            <i class="fas fa-user"></i>
+                            <span>Dad: +0987654321</span>
+                        </div>
+                    </div>
+                    <button id="addContact" class="btn outline">
+                        <i class="fas fa-plus"></i> Add Contact
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tracking History -->
+            <section class="card history-card">
+                <h2><i class="fas fa-history"></i> Recent Locations</h2>
+                <div id="locationHistory" class="history-list">
+                    <!-- History items will be added here -->
+                </div>
+            </section>
+
+            <!-- Settings -->
+            <section class="card settings-card">
+                <h2><i class="fas fa-gear"></i> Settings</h2>
+                <div class="settings-options">
+                    <div class="setting">
+                        <span>Auto Update Location</span>
+                        <label class="switch">
+                            <input type="checkbox" id="autoUpdate" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting">
+                        <span>Update Frequency</span>
+                        <select id="updateFrequency">
+                            <option value="30000">Every 30 seconds</option>
+                            <option value="60000" selected>Every minute</option>
+                            <option value="300000">Every 5 minutes</option>
+                            <option value="900000">Every 15 minutes</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>SafeTrack v1.0 • Location accuracy depends on device capabilities</p>
+            <p>Add to Home Screen for full app experience</p>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="addContactModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Emergency Contact</h3>
+            <input type="text" id="contactName" placeholder="Contact Name">
+            <input type="tel" id="contactPhone" placeholder="Phone Number">
+            <div class="modal-actions">
+                <button id="cancelContact" class="btn outline">Cancel</button>
+                <button id="saveContact" class="btn primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <h3>Share Location</h3>
+            <textarea id="locationMessage" readonly>My current location is: </textarea>
+            <div class="modal-actions">
+                <button id="copyLocation" class="btn primary">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+                <button id="sendSMS" class="btn primary">
+                    <i class="fas fa-sms"></i> Send SMS
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/location.js"></script>
+    <script src="scripts/notifications.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+</html>
